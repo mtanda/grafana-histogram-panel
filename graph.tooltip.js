@@ -31,8 +31,8 @@ function ($) {
       return j - 1;
     };
 
-    this.showTooltip = function(absoluteTime, relativeTime, innerHtml, pos) {
-      var body = '<div class="graph-tooltip small"><div class="graph-tooltip-time">'+ absoluteTime + '<br>(' + relativeTime + ')</div> ' ;
+    this.showTooltip = function(title, innerHtml, pos) {
+      var body = '<div class="graph-tooltip small"><div class="graph-tooltip-time">'+ title + '</div> ' ;
       body += innerHtml + '</div>';
       $tooltip.html(body).place_tt(pos.pageX + 20, pos.pageY);
     };
@@ -106,7 +106,7 @@ function ($) {
       var plot = elem.data().plot;
       var plotData = plot.getData();
       var seriesList = getSeriesFn();
-      var group, value, absoluteTime, relativeTime, hoverInfo, i, series, seriesHtml;
+      var group, value, hoverInfo, i, series, seriesHtml;
 
       if(dashboard.sharedCrosshair){
         scope.appEvent('setCrosshair', { pos: pos, scope: scope });
@@ -122,9 +122,6 @@ function ($) {
         var seriesHoverInfo = self.getMultiSeriesPlotHoverInfo(plotData, pos);
 
         seriesHtml = '';
-
-        relativeTime = dashboard.getRelativeTime(seriesHoverInfo.time);
-        absoluteTime = dashboard.formatDate(seriesHoverInfo.time);
 
         for (i = 0; i < seriesHoverInfo.length; i++) {
           hoverInfo = seriesHoverInfo[i];
@@ -143,7 +140,7 @@ function ($) {
           plot.highlight(i, hoverInfo.hoverIndex);
         }
 
-        self.showTooltip(absoluteTime, relativeTime, seriesHtml, pos);
+        self.showTooltip(seriesHoverInfo.time, seriesHtml, pos);
       }
       // single series tooltip
       else if (item) {
@@ -160,12 +157,9 @@ function ($) {
 
         value = series.formatValue(value);
 
-        relativeTime = dashboard.getRelativeTime(item.datapoint[0]);
-        absoluteTime = dashboard.formatDate(item.datapoint[0]);
-
         group += '<div class="graph-tooltip-value">' + value + '</div>';
 
-        self.showTooltip(absoluteTime, relativeTime, group, pos);
+        self.showTooltip(item.datapoint[0], group, pos);
       }
       // no hit
       else {
