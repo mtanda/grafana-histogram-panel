@@ -2,7 +2,6 @@ define([
   'angular',
   'app/app',
   'lodash',
-  'moment',
   'app/core/utils/kbn',
   'app/core/time_series',
   'app/features/panel/panel_meta',
@@ -10,7 +9,7 @@ define([
   './graph',
   './legend',
 ],
-function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
+function (angular, app, _, kbn, TimeSeries, PanelMeta) {
   'use strict';
 
   var module = angular.module('grafana.panels.histogram');
@@ -23,7 +22,7 @@ function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
     };
   });
 
-  module.controller('HistogramCtrl', function($scope, $rootScope, panelSrv, annotationsSrv, panelHelper, $q) {
+  module.controller('HistogramCtrl', function($scope, $rootScope, panelSrv, panelHelper) {
 
     $scope.panelMeta = new PanelMeta({
       panelName: 'Histogram',
@@ -112,7 +111,6 @@ function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
 
     _.defaults($scope.panel,_d);
     _.defaults($scope.panel.tooltip, _d.tooltip);
-    _.defaults($scope.panel.annotate, _d.annotate);
     _.defaults($scope.panel.grid, _d.grid);
     _.defaults($scope.panel.legend, _d.legend);
 
@@ -130,8 +128,6 @@ function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
     $scope.refreshData = function(datasource) {
       panelHelper.updateTimeRange($scope);
 
-      $scope.annotationsPromise = annotationsSrv.getAnnotations($scope.dashboard);
-
       return panelHelper.issueMetricQuery($scope, datasource)
         .then($scope.dataHandler, function(err) {
           $scope.seriesList = [];
@@ -142,17 +138,10 @@ function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
 
     $scope.loadSnapshot = function(snapshotData) {
       panelHelper.updateTimeRange($scope);
-      $scope.annotationsPromise = $q.when([]);
       $scope.dataHandler(snapshotData);
     };
 
     $scope.dataHandler = function(results) {
-      // png renderer returns just a url
-      if (_.isString(results)) {
-        $scope.render(results);
-        return;
-      }
-
       $scope.datapointsWarning = false;
       $scope.datapointsCount = 0;
       $scope.datapointsOutside = false;
@@ -161,15 +150,8 @@ function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
 
       $scope.datapointsWarning = $scope.datapointsCount === 0 || $scope.datapointsOutside;
 
-      $scope.annotationsPromise
-        .then(function(annotations) {
-          $scope.panelMeta.loading = false;
-          $scope.seriesList.annotations = annotations;
-          $scope.render($scope.seriesList);
-        }, function() {
-          $scope.panelMeta.loading = false;
-          $scope.render($scope.seriesList);
-        });
+      $scope.panelMeta.loading = false;
+      $scope.render($scope.seriesList);
     };
 
     $scope.seriesHandler = function(seriesData, index) {
@@ -185,12 +167,6 @@ function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
       });
 
       if (datapoints && datapoints.length > 0) {
-        var last = moment.utc(datapoints[datapoints.length - 1][1]);
-        var from = moment.utc($scope.range.from);
-        if (last - from < -10000) {
-          $scope.datapointsOutside = true;
-        }
-
         $scope.datapointsCount += datapoints.length;
       }
 
