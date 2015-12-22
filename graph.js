@@ -19,7 +19,7 @@ function (angular, $, moment, _, kbn, GraphTooltip) {
 
   var module = angular.module('grafana.directives');
 
-  module.directive('grafanaGraph', function($rootScope, timeSrv) {
+  module.directive('grafanaHistogram', function($rootScope, timeSrv) {
     return {
       restrict: 'A',
       template: '<div> </div>',

@@ -1,8 +1,13 @@
 {
   "pluginType": "panel",
 
-  "name": "Graph",
-  "type": "graph",
+  "name": "Histogram",
+  "type": "histogram",
 
-  "module": "app/plugins/panels/graph/module"
+  "module": "plugins/histogram/module",
+
+  "staticRoot": {
+    "url": "histogram",
+    "path": "."
+  }
 }

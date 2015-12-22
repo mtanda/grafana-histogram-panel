@@ -8,9 +8,9 @@ define([
 function (angular, _, $) {
   'use strict';
 
-  var module = angular.module('grafana.panels.graph');
+  var module = angular.module('grafana.panels.histogram');
 
-  module.directive('graphLegend', function(popoverSrv) {
+  module.directive('histogramLegend', function(popoverSrv) {
 
     return {
       link: function(scope, elem) {
@@ -45,7 +45,7 @@ function (angular, _, $) {
           popoverScope.series = seriesInfo;
           popoverSrv.show({
             element: el,
-            templateUrl:  'app/plugins/panels/graph/legend.popover.html',
+            templateUrl:  'public/plugins/histogram/legend.popover.html',
             scope: popoverScope
           });
         }

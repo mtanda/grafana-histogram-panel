@@ -12,26 +12,26 @@ define([
 function (angular, _, moment, kbn, TimeSeries, PanelMeta) {
   'use strict';
 
-  var module = angular.module('grafana.panels.graph');
+  var module = angular.module('grafana.panels.histogram');
 
-  module.directive('grafanaPanelGraph', function() {
+  module.directive('grafanaPanelHistogram', function() {
     return {
-      controller: 'GraphCtrl',
-      templateUrl: 'app/plugins/panels/graph/module.html',
+      controller: 'HistogramCtrl',
+      templateUrl: 'public/plugins/histogram/module.html',
     };
   });
 
-  module.controller('GraphCtrl', function($scope, $rootScope, panelSrv, annotationsSrv, panelHelper, $q) {
+  module.controller('HistogramCtrl', function($scope, $rootScope, panelSrv, annotationsSrv, panelHelper, $q) {
 
     $scope.panelMeta = new PanelMeta({
-      panelName: 'Graph',
+      panelName: 'Histogram',
       editIcon:  "fa fa-bar-chart",
       fullscreen: true,
       metricsEditor: true,
     });
 
-    $scope.panelMeta.addEditorTab('Axes & Grid', 'app/plugins/panels/graph/axisEditor.html');
-    $scope.panelMeta.addEditorTab('Display Styles', 'app/plugins/panels/graph/styleEditor.html');
+    $scope.panelMeta.addEditorTab('Axes & Grid', 'public/plugins/histogram/axisEditor.html');
+    $scope.panelMeta.addEditorTab('Display Styles', 'public/plugins/histogram/styleEditor.html');
     $scope.panelMeta.addEditorTab('Time range', 'app/features/panel/partials/panelTime.html');
 
     $scope.panelMeta.addExtendedMenuItem('Export CSV', '', 'exportCsv()');
