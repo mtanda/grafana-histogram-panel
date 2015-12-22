@@ -1,5 +1,6 @@
 define([
   'angular',
+  'app/app',
   'lodash',
   'moment',
   'app/core/utils/kbn',
@@ -9,10 +10,11 @@ define([
   './graph',
   './legend',
 ],
-function (angular, _, moment, kbn, TimeSeries, PanelMeta) {
+function (angular, app, _, moment, kbn, TimeSeries, PanelMeta) {
   'use strict';
 
   var module = angular.module('grafana.panels.histogram');
+  app.useModule(module);
 
   module.directive('grafanaPanelHistogram', function() {
     return {

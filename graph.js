@@ -1,5 +1,6 @@
 define([
   'angular',
+  'app/app',
   'jquery',
   'moment',
   'lodash',
@@ -14,10 +15,11 @@ define([
   'jquery.flot.fillbelow',
   'jquery.flot.crosshair'
 ],
-function (angular, $, moment, _, kbn, GraphTooltip) {
+function (angular, app, $, moment, _, kbn, GraphTooltip) {
   'use strict';
 
-  var module = angular.module('grafana.directives');
+  var module = angular.module('grafana.panels.histogram');
+  app.useModule(module);
 
   module.directive('grafanaHistogram', function($rootScope, timeSrv) {
     return {

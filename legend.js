@@ -1,14 +1,16 @@
 define([
   'angular',
   'lodash',
+  'app/app',
   'jquery',
   'jquery.flot',
   'jquery.flot.time',
 ],
-function (angular, _, $) {
+function (angular, _, app, $) {
   'use strict';
 
-  var module = angular.module('grafana.panels.histogram');
+  var module = angular.module('grafana.panels.histogram', []);
+  app.useModule(module);
 
   module.directive('histogramLegend', function(popoverSrv) {
 
