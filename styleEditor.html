@@ -24,8 +24,15 @@
       <select class="input-small" ng-model="panel.tooltip.value_type" ng-options="f for f in ['cumulative','individual']" ng-change="render()"></select>
     </div>
   </div>
-</div>
 
+  <div class="section">
+    <h5>Histogram</h5>
+    <div class="editor-option">
+      <label class="small">Bucket Size</label>
+      <input type="text" class="input-mini" ng-model="panel.bucketSize" ng-change="render()">
+    </div>
+  </div>
+</div>
 
 <div class="editor-row">
   <div class="section">

@@ -107,6 +107,7 @@ function (angular, app, _, kbn, TimeSeries, PanelMeta) {
       aliasColors: {},
       // other style overrides
       seriesOverrides: [],
+      bucketSize: 1,
     };
 
     _.defaults($scope.panel,_d);
