@@ -6,6 +6,7 @@ define([
   'app/core/utils/kbn',
   './graph.tooltip',
   'jquery.flot',
+  'jquery.flot.orderBars',
   'jquery.flot.events',
   'jquery.flot.selection',
   'jquery.flot.time',
@@ -155,6 +156,7 @@ function (angular, app, $, _, kbn, GraphTooltip) {
 
           for (var i = 0; i < series.datapoints.length; i++) {
             currentValue = series.datapoints[i][0];
+            //currentValue = series.datapoints[i][1];
 
             if (currentValue === null) {
               if (ignoreNulls) { continue; }
@@ -195,6 +197,9 @@ function (angular, app, $, _, kbn, GraphTooltip) {
           }
 
           series.stats.count = result.length;
+
+          result = [];
+           _.forEach(series.datapoints, function(item) { result.push([item[1], item[0]]); });
           return result;
         }
 
@@ -219,10 +224,12 @@ function (angular, app, $, _, kbn, GraphTooltip) {
               stack: panel.percentage ? null : stack,
               bars:   {
                 show: true,
-                fill: 1,
-                barWidth: 1,
-                zero: false,
-                lineWidth: 0
+                //fill: 1,
+                barWidth: 0.2,
+                //zero: false,
+                zero: true,
+                lineWidth: 1,
+                align: "center"
               },
               shadowSize: 1
             },
@@ -251,14 +258,29 @@ function (angular, app, $, _, kbn, GraphTooltip) {
             }
           }
 
+          /*
           if (data.length && data[0].stats.timeStep) {
             options.series.bars.barWidth = data[0].stats.timeStep / 1.5;
+          } */
+          if (data.length) {
+            if (panel.ordered) {
+                options.series.bars.barWidth = (1 / data.length) - 0.05;
+            } else {
+                options.series.bars.barWidth = 0.9;
+            }
           }
 
           addHistogramAxis(options);
           configureAxisOptions(data, options);
 
           sortedSeries = _.sortBy(data, function(series) { return series.zindex; });
+
+          if (panel.ordered) {
+              var order = 0;
+              _.forEach(sortedSeries, function(item) {
+                item.bars.order = order++;
+              });
+          }
 
           function callPlot(incrementRenderCounter) {
             try {

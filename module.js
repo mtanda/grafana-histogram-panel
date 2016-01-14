@@ -75,6 +75,8 @@ function (angular, app, _, kbn, TimeSeries, PanelMeta) {
       pointradius   : 5,
       // show hide bars
       bars          : false,
+      // enable/disable ordered
+      ordered       : false,
       // enable/disable stacking
       stack         : false,
       // stack percentage mode
