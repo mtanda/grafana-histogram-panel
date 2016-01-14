@@ -1,13 +1,9 @@
 {
-  "pluginType": "panel",
-
+  "type": "panel",
   "name": "Histogram",
-  "type": "histogram",
+  "id": "histogram",
 
   "module": "plugins/histogram/module",
 
-  "staticRoot": {
-    "url": "histogram",
-    "path": "."
-  }
+  "staticRoot": "."
 }
