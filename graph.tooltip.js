@@ -22,10 +22,24 @@ function ($) {
     };
 
     this.findHoverIndexFromData = function(posX, series) {
+      var prev = 0;
       var len = series.data.length;
       for (var j = 0; j < len; j++) {
+        var rem;
+        var zeroFix = 1;
+        if (posX < 0) {
+            zeroFix = -1;
+        }
+        rem = (posX + zeroFix) % parseInt(posX + zeroFix, 10);
+
         if (series.data[j][0] > posX) {
-          return Math.max(j - 1,  0);
+          if (rem < 0.5) {
+            return Math.max(j - 1,  0);
+          } else if (scope.panel.centeredbars || scope.panel.orderedbars) {
+            return Math.max(j,  0);
+          } else {
+            return Math.max(j - 1,  0);
+          }
         }
       }
       return j - 1;

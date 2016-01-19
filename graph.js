@@ -6,7 +6,7 @@ define([
   'app/core/utils/kbn',
   './graph.tooltip',
   'jquery.flot',
-  'jquery.flot.orderBars',
+  './flot/jquery.flot.orderBars',
   'jquery.flot.events',
   'jquery.flot.selection',
   'jquery.flot.time',
@@ -211,6 +211,10 @@ function (angular, app, $, _, kbn, GraphTooltip) {
 
           var panel = scope.panel;
           var stack = panel.stack ? true : null;
+          var align = panel.centeredbars ? "center" : "left";
+          if (panel.orderedbars) {
+            align = "left";
+          }
 
           // Populate element
           var options = {
@@ -224,12 +228,11 @@ function (angular, app, $, _, kbn, GraphTooltip) {
               stack: panel.percentage ? null : stack,
               bars:   {
                 show: true,
-                //fill: 1,
-                barWidth: 0.2,
-                //zero: false,
-                zero: true,
+                fill: panel.alphabars ? parseFloat(panel.alphabars, 10) : 1,
+                barWidth: 1,
+                zero: false,
                 lineWidth: 1,
-                align: "center"
+                align: align
               },
               shadowSize: 1
             },
@@ -263,19 +266,19 @@ function (angular, app, $, _, kbn, GraphTooltip) {
             options.series.bars.barWidth = data[0].stats.timeStep / 1.5;
           } */
           if (data.length) {
-            if (panel.ordered) {
+            if (panel.orderedbars) {
                 options.series.bars.barWidth = (1 / data.length) - 0.05;
             } else {
                 options.series.bars.barWidth = 0.9;
             }
           }
 
-          addHistogramAxis(options);
+          addHistogramAxis(data, options);
           configureAxisOptions(data, options);
 
           sortedSeries = _.sortBy(data, function(series) { return series.zindex; });
 
-          if (panel.ordered) {
+          if (panel.orderedbars) {
               var order = 0;
               _.forEach(sortedSeries, function(item) {
                 item.bars.order = order++;
@@ -318,10 +321,13 @@ function (angular, app, $, _, kbn, GraphTooltip) {
           }
         }
 
-        function addHistogramAxis(options) {
+        function addHistogramAxis(data, options) {
+          var ticks = elem.width() / 100;
+
           options.xaxis = {
             show: scope.panel['x-axis'],
-            label: "Values"
+            label: "Values",
+            ticks: ticks
           };
         }
 

@@ -1,4 +1,5 @@
 <div class="editor-row">
+
   <div class="section">
     <h5>Line options</h5>
     <div class="editor-option">
@@ -6,10 +7,10 @@
       <select class="input-medium" ng-model="panel.nullPointMode" ng-options="f for f in ['connected', 'null', 'null as zero']" ng-change="render()"></select>
     </div>
   </div>
+
   <div class="section">
     <h5>Multiple Series</h5>
-
-		<editor-opt-bool text="Ordered" model="panel.ordered" change="render()"></editor-opt-bool>
+		<editor-opt-bool text="Ordered" model="panel.orderedbars" change="render()"></editor-opt-bool>
 		<editor-opt-bool text="Stack" model="panel.stack" change="render()"></editor-opt-bool>
 		<editor-opt-bool text="Percent" model="panel.percentage" change="render()" tip="Stack as a percentage of total"></editor-opt-bool>
 	</div>
@@ -24,6 +25,19 @@
       <label class="small">Stacked Values <tip>How should the values in stacked charts to be calculated?</tip></label>
       <select class="input-small" ng-model="panel.tooltip.value_type" ng-options="f for f in ['cumulative','individual']" ng-change="render()"></select>
     </div>
+  </div>
+
+  <div class="section">
+    <h5>Bars aspect</h5>
+    <div class="editor-option">
+      <label class="small">Alpha fill<tip>0: fully transparent; 1: fully opaque.</tip></label>
+      <select class="input-medium" ng-model="panel.alphabars" ng-options="f for f in ['0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1']" ng-change="render()"></select>
+    </div>
+  </div>
+
+  <div class="section">
+    <h5>Bars alignment</h5>
+        <editor-opt-bool text="Centered" model="panel.centeredbars" change="render()"></editor-opt-bool>
   </div>
 
   <div class="section">
