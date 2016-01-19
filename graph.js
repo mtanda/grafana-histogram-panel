@@ -322,7 +322,19 @@ function (angular, app, $, _, kbn, GraphTooltip) {
         }
 
         function addHistogramAxis(data, options) {
-          var ticks = elem.width() / 100;
+          var ticks;
+          if(scope.panel.autoticks) {
+            ticks = elem.width() / 100;
+          } else {
+            var ticks = Array();
+            if(data.length) {
+              var cnt = 0;
+              _.forEach(data[0].data, function(item) {
+                // ticks.push([cnt++, item[0]]);
+                ticks.push([item[0], item[0]]);
+              });
+            }
+          }
 
           options.xaxis = {
             show: scope.panel['x-axis'],
