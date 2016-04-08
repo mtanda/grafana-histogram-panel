@@ -1,9 +1,10 @@
 {
   "type": "panel",
   "name": "Histogram",
-  "id": "histogram",
+  "id": "grafana-histogram-panel",
 
-  "module": "plugins/histogram/module",
-
-  "staticRoot": "."
+  "dependencies": {
+    "grafanaVersion": "3.x.x",
+    "plugins": [ ]
+  }
 }
