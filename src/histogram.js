@@ -253,7 +253,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
 
         for (var i = 0; i < data.length; i++) {
           var series = data[i];
-          series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, panel.bucketSize);
+          series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, 10);
 
           // if hidden remove points and disable stack
           if (ctrl.hiddenSeries[series.alias]) {
