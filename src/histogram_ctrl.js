@@ -7,12 +7,11 @@ export class HistogramCtrl extends GraphCtrl {
   constructor($scope, $injector, $rootScope, annotationsSrv) {
     super($scope, $injector, annotationsSrv);
     this.$rootScope = $rootScope;
-
-    this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
   }
 
   onInitEditMode() {
-    this.addEditorTab('Options', './tab_options.html');
+    super.onInitEditMode();
+    this.addEditorTab('Histogram Options', 'public/plugins/grafana-histogram-panel/tab_options.html');
   }
 }
 
