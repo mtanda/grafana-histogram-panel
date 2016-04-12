@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/module.js"],"names":[],"mappings":";;;;;;;AAAO;;AACC;;;2BAIN","file":"module.js","sourcesContent":["import _ from 'lodash';\nimport {HistogramCtrl} from './histogram_ctrl';\nimport './histogram';\n\nexport {\n  HistogramCtrl as PanelCtrl\n};\n"]}
