@@ -279,10 +279,8 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           options.series.bars.barWidth = data[0].stats.timeStep / 1.5;
         }
 
-        addTimeAxis(options);
-        addGridThresholds(options, panel);
-        addAnnotations(options);
-        configureAxisOptions(data, options);
+        addHistogramAxis(options);
+        options.selection = {};
 
         sortedSeries = _.sortBy(data, function(series) { return series.zindex; });
 
@@ -322,98 +320,11 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         }
       }
 
-      function addTimeAxis(options) {
-        var ticks = elem.width() / 100;
-        var min = _.isUndefined(ctrl.range.from) ? null : ctrl.range.from.valueOf();
-        var max = _.isUndefined(ctrl.range.to) ? null : ctrl.range.to.valueOf();
-
+      function addHistogramAxis(options) {
         options.xaxis = {
-          timezone: dashboard.getTimezone(),
           show: panel['x-axis'],
-          mode: "time",
-          min: min,
-          max: max,
-          label: "Datetime",
-          ticks: ticks,
-          timeformat: time_format(ticks, min, max),
+          label: "Values"
         };
-      }
-
-      function addGridThresholds(options, panel) {
-        if (_.isNumber(panel.grid.threshold1)) {
-          var limit1 = panel.grid.thresholdLine ? panel.grid.threshold1 : (panel.grid.threshold2 || null);
-          options.grid.markings.push({
-            yaxis: { from: panel.grid.threshold1, to: limit1 },
-            color: panel.grid.threshold1Color
-          });
-
-          if (_.isNumber(panel.grid.threshold2)) {
-            var limit2;
-            if (panel.grid.thresholdLine) {
-              limit2 = panel.grid.threshold2;
-            } else {
-              limit2 = panel.grid.threshold1 > panel.grid.threshold2 ?  -Infinity : +Infinity;
-            }
-            options.grid.markings.push({
-              yaxis: { from: panel.grid.threshold2, to: limit2 },
-              color: panel.grid.threshold2Color
-            });
-          }
-        }
-      }
-
-      function addAnnotations(options) {
-        if(!annotations || annotations.length === 0) {
-          return;
-        }
-
-        var types = {};
-
-        _.each(annotations, function(event) {
-          if (!types[event.annotation.name]) {
-            types[event.annotation.name] = {
-              color: event.annotation.iconColor,
-              position: 'BOTTOM',
-              markerSize: 5,
-            };
-          }
-        });
-
-        options.events = {
-          levels: _.keys(types).length + 1,
-          data: annotations,
-          types: types,
-        };
-      }
-
-      function configureAxisOptions(data, options) {
-        var defaults = {
-          position: 'left',
-          show: panel.yaxes[0].show,
-          min: panel.yaxes[0].min,
-          index: 1,
-          logBase: panel.yaxes[0].logBase || 1,
-          max: panel.percentage && panel.stack ? 100 : panel.yaxes[0].max,
-        };
-
-        options.yaxes.push(defaults);
-
-        if (_.findWhere(data, {yaxis: 2})) {
-          var secondY = _.clone(defaults);
-          secondY.index = 2,
-          secondY.show = panel.yaxes[1].show;
-          secondY.logBase = panel.yaxes[1].logBase || 1,
-          secondY.position = 'right';
-          secondY.min = panel.yaxes[1].min;
-          secondY.max = panel.percentage && panel.stack ? 100 : panel.yaxes[1].max;
-          options.yaxes.push(secondY);
-
-          applyLogScale(options.yaxes[1], data);
-          configureAxisMode(options.yaxes[1], panel.percentage && panel.stack ? "percent" : panel.yaxes[1].format);
-        }
-
-        applyLogScale(options.yaxes[0], data);
-        configureAxisMode(options.yaxes[0], panel.percentage && panel.stack ? "percent" : panel.yaxes[0].format);
       }
 
       function applyLogScale(axis, data) {
