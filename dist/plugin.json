@@ -1,0 +1,10 @@
+{
+  "type": "panel",
+  "name": "Histogram",
+  "id": "grafana-histogram-panel",
+
+  "dependencies": {
+    "grafanaVersion": "3.x.x",
+    "plugins": [ ]
+  }
+}
