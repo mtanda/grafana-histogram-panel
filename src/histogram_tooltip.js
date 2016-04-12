@@ -4,7 +4,7 @@ define([
 function ($) {
   'use strict';
 
-  function GraphTooltip(elem, dashboard, scope, getSeriesFn) {
+  function HistogramTooltip(elem, dashboard, scope, getSeriesFn) {
     var self = this;
     var ctrl = scope.ctrl;
     var panel = ctrl.panel;
@@ -33,8 +33,8 @@ function ($) {
       return j - 1;
     };
 
-    this.showTooltip = function(absoluteTime, innerHtml, pos) {
-      var body = '<div class="graph-tooltip-time">'+ absoluteTime + '</div>';
+    this.showTooltip = function(title, innerHtml, pos) {
+      var body = '<div class="graph-tooltip-time">'+ title + '</div>';
       body += innerHtml + '</div>';
       $tooltip.html(body).place_tt(pos.pageX + 20, pos.pageY);
     };
@@ -108,7 +108,7 @@ function ($) {
       var plot = elem.data().plot;
       var plotData = plot.getData();
       var seriesList = getSeriesFn();
-      var group, value, absoluteTime, hoverInfo, i, series, seriesHtml, tooltipFormat;
+      var group, value, hoverInfo, i, series, seriesHtml, tooltipFormat;
 
       if (panel.tooltip.msResolution) {
         tooltipFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
@@ -130,8 +130,6 @@ function ($) {
         var seriesHoverInfo = self.getMultiSeriesPlotHoverInfo(plotData, pos);
 
         seriesHtml = '';
-
-        absoluteTime = dashboard.formatDate(seriesHoverInfo.time, tooltipFormat);
 
         for (i = 0; i < seriesHoverInfo.length; i++) {
           hoverInfo = seriesHoverInfo[i];
@@ -155,7 +153,7 @@ function ($) {
           plot.highlight(i, hoverInfo.hoverIndex);
         }
 
-        self.showTooltip(absoluteTime, seriesHtml, pos);
+        self.showTooltip(seriesHoverInfo.time, seriesHtml, pos);
       }
       // single series tooltip
       else if (item) {
@@ -172,11 +170,9 @@ function ($) {
 
         value = series.formatValue(value);
 
-        absoluteTime = dashboard.formatDate(item.datapoint[0], tooltipFormat);
-
         group += '<div class="graph-tooltip-value">' + value + '</div>';
 
-        self.showTooltip(absoluteTime, group, pos);
+        self.showTooltip(item.datapoint[0], group, pos);
       }
       // no hit
       else {

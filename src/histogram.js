@@ -3,7 +3,7 @@ import $ from 'jquery';
 import moment from 'moment';
 import _ from 'lodash';
 import kbn from 'app/core/utils/kbn';
-import GraphTooltip from 'app/plugins/panel/graph/graph_tooltip.js';
+import HistogramTooltip from './histogram_tooltip.js';
 import 'jquery.flot';
 import 'jquery.flot.selection';
 import 'jquery.flot.time';
@@ -453,7 +453,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         elem.html('<img src="' + url + '"></img>');
       }
 
-      new GraphTooltip(elem, dashboard, scope, function() {
+      new HistogramTooltip(elem, dashboard, scope, function() {
         return sortedSeries;
       });
 
