@@ -3,7 +3,7 @@ import $ from 'jquery';
 import moment from 'moment';
 import _ from 'lodash';
 import kbn from 'app/core/utils/kbn';
-import GraphTooltip from './graph_tooltip';
+import GraphTooltip from 'app/plugins/panel/graph/graph_tooltip.js';
 import 'jquery.flot';
 import 'jquery.flot.selection';
 import 'jquery.flot.time';
@@ -11,7 +11,7 @@ import 'jquery.flot.stack';
 import 'jquery.flot.stackpercent';
 import 'jquery.flot.fillbelow';
 import 'jquery.flot.crosshair';
-import './jquery.flot.events';
+import 'app/plugins/panel/graph/jquery.flot.events';
 
 angular.module('grafana.directives').directive('grafanaHistogram', function($rootScope, timeSrv) {
   return {
