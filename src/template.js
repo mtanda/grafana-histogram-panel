@@ -12,7 +12,7 @@ var template = `
       </span>
     </div>
 
-    <div grafana-graph class="histogram-chart" ng-dblclick="ctrl.zoomOut()">
+    <div grafana-histogram class="histogram-chart" ng-dblclick="ctrl.zoomOut()">
     </div>
 
   </div>
