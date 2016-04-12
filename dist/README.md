@@ -13,7 +13,7 @@ sudo service grafana-server restart
 The edit your grafana.ini config file (Default location is at /etc/grafana/grafana.ini) and add this:
 
 ```ini
-[plugin.histogram]
+[plugin.grafana-histogram-panel]
 path = /home/your/clone/dir/panel-plugin-histogram
 ```
 
