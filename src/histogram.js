@@ -222,25 +222,12 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           series: {
             stackpercent: panel.stack ? panel.percentage : false,
             stack: panel.percentage ? null : stack,
-            lines:  {
-              show: panel.lines,
-              zero: false,
-              fill: translateFillOption(panel.fill),
-              lineWidth: panel.linewidth,
-              steps: panel.steppedLine
-            },
             bars:   {
-              show: panel.bars,
+              show: true,
               fill: 1,
               barWidth: 1,
               zero: false,
               lineWidth: 0
-            },
-            points: {
-              show: panel.points,
-              fill: 1,
-              fillColor: false,
-              radius: panel.points ? panel.pointradius : 2
             },
             shadowSize: 0
           },
