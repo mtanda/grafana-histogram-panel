@@ -3,10 +3,6 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mtanda/grafana-panel-plugin-histogram.git"
-  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
