@@ -254,12 +254,11 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                   stack: panel.percentage ? null : stack,
                   bars: {
                     show: true,
-                    //fill: 1,
                     fill: panel.alphabars ? parseFloat(panel.alphabars, 10) : 1,
-                    barWidth: 0.2,
-                    zero: true,
+                    barWidth: 1,
+                    zero: false,
                     lineWidth: 1,
-                    align: "center"
+                    align: align
                   },
                   shadowSize: 1
                 },
