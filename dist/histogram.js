@@ -255,6 +255,7 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                   bars: {
                     show: true,
                     //fill: 1,
+                    fill: panel.alphabars ? parseFloat(panel.alphabars, 10) : 1,
                     barWidth: 0.2,
                     zero: true,
                     lineWidth: 1,
@@ -366,14 +367,11 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                 if (data.length) {
                   var cnt = 0;
                   _.forEach(data[0].datapoints, function (item) {
-                    console.log(data[0].data[cnt]);
-                    console.log(item);
                     ticks.push([data[0].data[cnt][0], item[1]]);
                     cnt++;
                   });
                 }
               }
-              console.log(ticks);
               options.xaxis = {
                 show: panel['x-axis'],
                 label: "Values",

@@ -240,6 +240,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
             bars:   {
               show: true,
               //fill: 1,
+              fill: panel.alphabars ? parseFloat(panel.alphabars, 10) : 1,
               barWidth: 0.2,
               zero: true,
               lineWidth: 1,
@@ -353,7 +354,6 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
             });
         }
        }
-       console.log(ticks);
        options.xaxis = {
         show: panel['x-axis'],
         label: "Values",
