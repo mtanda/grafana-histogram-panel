@@ -348,8 +348,6 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         if(data.length) {
             var cnt = 0;
             _.forEach(data[0].datapoints, function(item) {
-                console.log(data[0].data[cnt]);
-                console.log(item);
                 ticks.push([data[0].data[cnt][0], item[1]]);
                 cnt++;
             });
