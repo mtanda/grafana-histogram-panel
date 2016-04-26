@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', './template'], function (_export, _context) {
-  var MetricsPanelCtrl, GraphCtrl, template, _createClass, _get, HistogramCtrl;
+System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', 'app/core/utils/kbn', './template'], function (_export, _context) {
+  var MetricsPanelCtrl, GraphCtrl, kbn, template, _createClass, HistogramCtrl;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -38,6 +38,8 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', './templat
       MetricsPanelCtrl = _appPluginsSdk.MetricsPanelCtrl;
     }, function (_appPluginsPanelGraphModule) {
       GraphCtrl = _appPluginsPanelGraphModule.GraphCtrl;
+    }, function (_appCoreUtilsKbn) {
+      kbn = _appCoreUtilsKbn.default;
     }, function (_template) {
       template = _template.default;
     }],
@@ -60,31 +62,6 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', './templat
         };
       }();
 
-      _get = function get(object, property, receiver) {
-        if (object === null) object = Function.prototype;
-        var desc = Object.getOwnPropertyDescriptor(object, property);
-
-        if (desc === undefined) {
-          var parent = Object.getPrototypeOf(object);
-
-          if (parent === null) {
-            return undefined;
-          } else {
-            return get(parent, property, receiver);
-          }
-        } else if ("value" in desc) {
-          return desc.value;
-        } else {
-          var getter = desc.get;
-
-          if (getter === undefined) {
-            return undefined;
-          }
-
-          return getter.call(receiver);
-        }
-      };
-
       _export('HistogramCtrl', HistogramCtrl = function (_GraphCtrl) {
         _inherits(HistogramCtrl, _GraphCtrl);
 
@@ -102,8 +79,18 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', './templat
         _createClass(HistogramCtrl, [{
           key: 'onInitEditMode',
           value: function onInitEditMode() {
-            _get(Object.getPrototypeOf(HistogramCtrl.prototype), 'onInitEditMode', this).call(this);
-            this.addEditorTab('Histogram Options', 'public/plugins/grafana-histogram-panel/tab_options.html');
+            this.addEditorTab('Legend', 'public/app/plugins/panel/graph/tab_legend.html', 2);
+            this.addEditorTab('Display', 'public/plugins/grafana-histogram-panel/tab_display.html', 3);
+            this.addEditorTab('Histogram Options', 'public/plugins/grafana-histogram-panel/tab_options.html', 4);
+
+            this.logScales = {
+              'linear': 1,
+              'log (base 2)': 2,
+              'log (base 10)': 10,
+              'log (base 32)': 32,
+              'log (base 1024)': 1024
+            };
+            this.unitFormats = kbn.getUnitFormats();
           }
         }]);
 
