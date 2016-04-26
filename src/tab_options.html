@@ -10,25 +10,24 @@
 	</div>
 
 	<div class="section gf-form-group">
-        <h5 class="section-heading">Multiple Series</h5>
-            <gf-form-switch class="gf-form" label="Ordered" label-class="max-width-10" checked="ctrl.panel.ordered" on-change="ctrl.render()"></gf-form-switch>
-            <gf-form-switch class="gf-form" label="Stack" label-class="max-width-10" checked="ctrl.panel.stack" on-change="ctrl.render()"></gf-form-switch>
-            <gf-form-switch class="gf-form" label="Percent" label-class="max-width-10" checked="ctrl.panel.percentage" on-change="ctrl.render()"></gf-form-switch>
-    </div>
+		<h5 class="section-heading">Multiple Series</h5>
+		<gf-form-switch class="gf-form" label="Ordered" label-class="max-width-10" checked="ctrl.panel.ordered" on-change="ctrl.render()"></gf-form-switch>
+		<gf-form-switch class="gf-form" label="Stack" label-class="max-width-10" checked="ctrl.panel.stack" on-change="ctrl.render()"></gf-form-switch>
+		<gf-form-switch class="gf-form" label="Percent" label-class="max-width-10" checked="ctrl.panel.percentage" on-change="ctrl.render()"></gf-form-switch>
+	</div>
 
 	<div class="section gf-form-group">
-        <h5 class="section-heading">Alignment</h5>
-            <gf-form-switch class="gf-form" label="Centered" label-class="max-width-10" checked="ctrl.panel.centeredbars" on-change="ctrl.render()"></gf-form-switch>
+		<h5 class="section-heading">Alignment</h5>
+		<gf-form-switch class="gf-form" label="Centered" label-class="max-width-10" checked="ctrl.panel.centeredBars" on-change="ctrl.render()"></gf-form-switch>
 	</div>
 
 	<div class="section gf-form-group">
 		<h5 class="section-heading">Ticks</h5>
-            <gf-form-switch class="gf-form" label="Auto Ticks" label-class="max-width-10" checked="ctrl.panel.autoticks" on-change="ctrl.render()"></gf-form-switch>
+		<gf-form-switch class="gf-form" label="Auto Ticks" label-class="max-width-10" checked="ctrl.panel.autoTicks" on-change="ctrl.render()"></gf-form-switch>
 	</div>
 
 	<div class="section gf-form-group">
 		<h5 class="section-heading">Alpha</h5>
-        <select class="input-medium" ng-model="ctrl.panel.alphabars" ng-options="f for f in ['0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1']" ng-change="ctrl.render()"></select>
+		<select class="input-medium" ng-model="ctrl.panel.alphaBars" ng-options="f for f in ['0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1']" ng-change="ctrl.render()"></select>
 	</div>
 </div>
-

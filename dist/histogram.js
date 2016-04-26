@@ -222,7 +222,6 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
               result = [];
               _.forEach(series.datapoints, function (item) {
                 var idx = result.length;
-                var val = {};
                 result.push([idx, item[0]]);
               });
               series.stats.count = result.length;
@@ -237,9 +236,9 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
               }
 
               var stack = panel.stack ? true : null;
-              var align = panel.centeredbars ? "center" : "left";
-              if (panel.orderedbars) {
-                align = "left";
+              var align = panel.centeredBars ? 'center' : 'left';
+              if (panel.orderedBars) {
+                align = 'left';
               }
 
               // Populate element
@@ -254,7 +253,7 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                   stack: panel.percentage ? null : stack,
                   bars: {
                     show: true,
-                    fill: panel.alphabars ? parseFloat(panel.alphabars, 10) : 1,
+                    fill: panel.alphaBars ? parseFloat(panel.alphaBars, 10) : 1,
                     barWidth: 1,
                     zero: false,
                     lineWidth: 1,
@@ -315,8 +314,8 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
 
               if (panel.ordered) {
                 var order = 0;
-                _.forEach(sortedSeries, function (item) {
-                  item.bars.order = order++;
+                _.forEach(sortedSeries, function (series) {
+                  series.bars.order = order++;
                 });
               }
 
@@ -359,7 +358,7 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
 
             function addHistogramAxis(options) {
               var ticks;
-              if (panel.autoticks) {
+              if (panel.autoTicks) {
                 ticks = elem.width() / 100;
               } else {
                 var ticks = Array();
@@ -373,7 +372,7 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
               }
               options.xaxis = {
                 show: panel['x-axis'],
-                label: "Values",
+                label: 'Values',
                 ticks: ticks
               };
             }

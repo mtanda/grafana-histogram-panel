@@ -203,12 +203,10 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         }
         series.stats.count = result.length;
 
-        result=[];
+        result = [];
         _.forEach(series.datapoints, function(item) {
-            var idx = result.length;
-            var val = {
-            }
-            result.push([idx, item[0]]);
+          var idx = result.length;
+          result.push([idx, item[0]]);
         });
         series.stats.count = result.length;
 
@@ -222,9 +220,9 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         }
 
         var stack = panel.stack ? true : null;
-        var align = panel.centeredbars ? "center" : "left";
-        if (panel.orderedbars) {
-            align = "left";
+        var align = panel.centeredBars ? 'center' : 'left';
+        if (panel.orderedBars) {
+            align = 'left';
         }
 
         // Populate element
@@ -239,7 +237,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
             stack: panel.percentage ? null : stack,
             bars:   {
               show: true,
-              fill: panel.alphabars ? parseFloat(panel.alphabars, 10) : 1,
+              fill: panel.alphaBars ? parseFloat(panel.alphaBars, 10) : 1,
               barWidth: 1,
               zero: false,
               lineWidth: 1,
@@ -298,8 +296,8 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
 
         if (panel.ordered) {
             var order = 0;
-            _.forEach(sortedSeries, function(item) {
-                item.bars.order = order++;
+            _.forEach(sortedSeries, function(series) {
+                series.bars.order = order++;
             });
         }
 
@@ -340,24 +338,24 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
       }
 
       function addHistogramAxis(options) {
-       var ticks;
-       if(panel.autoticks) {
-        ticks = elem.width() / 100;
-       } else {
-        var ticks = Array();
-        if(data.length) {
+        var ticks;
+        if (panel.autoTicks) {
+          ticks = elem.width() / 100;
+        } else {
+          var ticks = Array();
+          if (data.length) {
             var cnt = 0;
             _.forEach(data[0].datapoints, function(item) {
-                ticks.push([data[0].data[cnt][0], item[1]]);
-                cnt++;
+              ticks.push([data[0].data[cnt][0], item[1]]);
+              cnt++;
             });
+          }
         }
-       }
-       options.xaxis = {
-        show: panel['x-axis'],
-        label: "Values",
-        ticks: ticks
-       };
+        options.xaxis = {
+          show: panel['x-axis'],
+          label: 'Values',
+          ticks: ticks
+        };
       }
 
       function applyLogScale(axis, data) {

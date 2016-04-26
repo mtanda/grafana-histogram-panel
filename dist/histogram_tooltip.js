@@ -35,7 +35,7 @@ System.register(['jquery'], function (_export, _context) {
         if (series.data[j][0] > posX) {
           if (rem < 0.5) {
             return Math.max(j - 1, 0);
-          } else if (panel.centeredbars || panel.orderedbars) {
+          } else if (panel.centeredBars || panel.orderedBars) {
             return Math.max(j, 0);
           } else {
             return Math.max(j - 1, 0);
