@@ -227,7 +227,8 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
               fill: 1,
               barWidth: 1,
               zero: false,
-              lineWidth: 0
+              lineWidth: 0,
+              align: 'center'
             },
             shadowSize: 0
           },

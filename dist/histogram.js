@@ -244,7 +244,8 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                     fill: 1,
                     barWidth: 1,
                     zero: false,
-                    lineWidth: 0
+                    lineWidth: 0,
+                    align: 'center'
                   },
                   shadowSize: 0
                 },
