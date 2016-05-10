@@ -5,9 +5,16 @@ import template from './template';
 
 export class HistogramCtrl extends GraphCtrl {
   /** @ngInject */
-  constructor($scope, $injector, $rootScope, annotationsSrv) {
+  constructor($scope, $injector, $rootScope, $q) {
+    var annotationsSrv = {
+      getAnnotations: function() {
+        return $q.when({});
+      }
+    };
+
     super($scope, $injector, annotationsSrv);
     this.$rootScope = $rootScope;
+    this.annotationsSrv = annotationsSrv;
   }
 
   onInitEditMode() {
@@ -23,6 +30,16 @@ export class HistogramCtrl extends GraphCtrl {
       'log (base 1024)': 1024
     };
     this.unitFormats = kbn.getUnitFormats();
+  }
+
+  issueQueries(datasource) {
+    this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
+    return super.issueQueries(datasource);
+  }
+
+  onDataSnapshotLoad(snapshotData) {
+    this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
+    this.onDataReceived(snapshotData);
   }
 }
 
