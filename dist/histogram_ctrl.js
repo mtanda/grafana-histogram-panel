@@ -1,7 +1,7 @@
 'use strict';
 
 System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', 'app/core/utils/kbn', './template'], function (_export, _context) {
-  var MetricsPanelCtrl, GraphCtrl, kbn, template, _createClass, HistogramCtrl;
+  var MetricsPanelCtrl, GraphCtrl, kbn, template, _createClass, _get, HistogramCtrl;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -62,17 +62,49 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', 'app/core/
         };
       }();
 
+      _get = function get(object, property, receiver) {
+        if (object === null) object = Function.prototype;
+        var desc = Object.getOwnPropertyDescriptor(object, property);
+
+        if (desc === undefined) {
+          var parent = Object.getPrototypeOf(object);
+
+          if (parent === null) {
+            return undefined;
+          } else {
+            return get(parent, property, receiver);
+          }
+        } else if ("value" in desc) {
+          return desc.value;
+        } else {
+          var getter = desc.get;
+
+          if (getter === undefined) {
+            return undefined;
+          }
+
+          return getter.call(receiver);
+        }
+      };
+
       _export('HistogramCtrl', HistogramCtrl = function (_GraphCtrl) {
         _inherits(HistogramCtrl, _GraphCtrl);
 
         /** @ngInject */
 
-        function HistogramCtrl($scope, $injector, $rootScope, annotationsSrv) {
+        function HistogramCtrl($scope, $injector, $rootScope, $q) {
           _classCallCheck(this, HistogramCtrl);
+
+          var annotationsSrv = {
+            getAnnotations: function getAnnotations() {
+              return $q.when({});
+            }
+          };
 
           var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HistogramCtrl).call(this, $scope, $injector, annotationsSrv));
 
           _this.$rootScope = $rootScope;
+          _this.annotationsSrv = annotationsSrv;
           return _this;
         }
 
@@ -91,6 +123,18 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', 'app/core/
               'log (base 1024)': 1024
             };
             this.unitFormats = kbn.getUnitFormats();
+          }
+        }, {
+          key: 'issueQueries',
+          value: function issueQueries(datasource) {
+            this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
+            return _get(Object.getPrototypeOf(HistogramCtrl.prototype), 'issueQueries', this).call(this, datasource);
+          }
+        }, {
+          key: 'onDataSnapshotLoad',
+          value: function onDataSnapshotLoad(snapshotData) {
+            this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
+            this.onDataReceived(snapshotData);
           }
         }]);
 
