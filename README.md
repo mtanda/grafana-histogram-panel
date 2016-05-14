@@ -14,7 +14,7 @@ The edit your grafana.ini config file (Default location is at /etc/grafana/grafa
 
 ```ini
 [plugin.grafana-histogram-panel]
-path = /home/your/clone/dir/grafana-histogram-panel/dist
+path = /home/your/clone/dir/grafana-histogram-panel
 ```
 
 Note that if you clone it into the grafana plugins directory you do not need to add the above config option. That is only
