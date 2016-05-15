@@ -92,13 +92,11 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', 'app/core/
 
         /** @ngInject */
 
-        function HistogramCtrl($scope, $injector, $rootScope, $q) {
+        function HistogramCtrl($scope, $injector, $rootScope) {
           _classCallCheck(this, HistogramCtrl);
 
           var annotationsSrv = {
-            getAnnotations: function getAnnotations() {
-              return $q.when({});
-            }
+            getAnnotations: function getAnnotations() {}
           };
 
           var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HistogramCtrl).call(this, $scope, $injector, annotationsSrv));
@@ -127,14 +125,31 @@ System.register(['app/plugins/sdk', 'app/plugins/panel/graph/module', 'app/core/
         }, {
           key: 'issueQueries',
           value: function issueQueries(datasource) {
-            this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
             return _get(Object.getPrototypeOf(HistogramCtrl.prototype), 'issueQueries', this).call(this, datasource);
           }
         }, {
           key: 'onDataSnapshotLoad',
           value: function onDataSnapshotLoad(snapshotData) {
-            this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
             this.onDataReceived(snapshotData);
+          }
+        }, {
+          key: 'onDataReceived',
+          value: function onDataReceived(dataList) {
+            // png renderer returns just a url
+            if (_.isString(dataList)) {
+              this.render(dataList);
+              return;
+            }
+
+            this.datapointsWarning = false;
+            this.datapointsCount = 0;
+            this.datapointsOutside = false;
+            this.seriesList = dataList.map(this.seriesHandler.bind(this));
+            this.datapointsWarning = this.datapointsCount === 0 || this.datapointsOutside;
+
+            this.loading = false;
+            this.seriesList.annotations = null;
+            this.render(this.seriesList);
           }
         }]);
 

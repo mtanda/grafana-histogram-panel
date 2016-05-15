@@ -5,11 +5,9 @@ import template from './template';
 
 export class HistogramCtrl extends GraphCtrl {
   /** @ngInject */
-  constructor($scope, $injector, $rootScope, $q) {
+  constructor($scope, $injector, $rootScope) {
     var annotationsSrv = {
-      getAnnotations: function() {
-        return $q.when({});
-      }
+      getAnnotations: function() {}
     };
 
     super($scope, $injector, annotationsSrv);
@@ -33,13 +31,29 @@ export class HistogramCtrl extends GraphCtrl {
   }
 
   issueQueries(datasource) {
-    this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
     return super.issueQueries(datasource);
   }
 
   onDataSnapshotLoad(snapshotData) {
-    this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
     this.onDataReceived(snapshotData);
+  }
+
+  onDataReceived(dataList) {
+    // png renderer returns just a url
+    if (_.isString(dataList)) {
+      this.render(dataList);
+      return;
+    }
+
+    this.datapointsWarning = false;
+    this.datapointsCount = 0;
+    this.datapointsOutside = false;
+    this.seriesList = dataList.map(this.seriesHandler.bind(this));
+    this.datapointsWarning = this.datapointsCount === 0 || this.datapointsOutside;
+
+    this.loading = false;
+    this.seriesList.annotations = null;
+    this.render(this.seriesList);
   }
 }
 
