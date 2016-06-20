@@ -8,8 +8,12 @@
     "author": {
       "name": "Mitsuhiro Tanda"
     },
+    "keywords": ["histogram", "panel"],
     "links": [
       {"name": "GitHub", "url": "https://github.com/mtanda/grafana-histogram-panel"}
+    ],
+    "screenshots": [
+      {"name": "Histogram", "path": "src/images/histogram.png"}
     ],
     "version": "0.1.0",
     "updated": "2016-04-14"
