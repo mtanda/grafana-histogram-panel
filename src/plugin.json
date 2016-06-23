@@ -1,7 +1,7 @@
 {
   "type": "panel",
   "name": "Histogram",
-  "id": "grafana-histogram-panel",
+  "id": "mtanda-histogram-panel",
 
   "info": {
     "description": "Histogram Panel for Grafana",
@@ -13,7 +13,7 @@
       {"name": "GitHub", "url": "https://github.com/mtanda/grafana-histogram-panel"}
     ],
     "screenshots": [
-      {"name": "Histogram", "path": "src/images/histogram.png"}
+      {"name": "Histogram", "path": "images/histogram.png"}
     ],
     "version": "0.1.0",
     "updated": "2016-04-14"
