@@ -117,8 +117,8 @@ export class HistogramCtrl extends MetricsPanelCtrl {
 
   onInitEditMode() {
     this.addEditorTab('Legend', 'public/app/plugins/panel/graph/tab_legend.html', 2);
-    this.addEditorTab('Display', 'public/plugins/grafana-histogram-panel/tab_display.html', 3);
-    this.addEditorTab('Histogram Options', 'public/plugins/grafana-histogram-panel/tab_options.html', 4);
+    this.addEditorTab('Display', 'public/plugins/mtanda-histogram-panel/tab_display.html', 3);
+    this.addEditorTab('Histogram Options', 'public/plugins/mtanda-histogram-panel/tab_options.html', 4);
 
     this.logScales = {
       'linear': 1,
