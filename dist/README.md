@@ -1,22 +1,30 @@
-## Clone into plugins directory
-Either clone this repo into your grafana plugins directory (default /var/lib/grafana/plugins if your installing grafana with package).
-Restart grafana-server and the plugin should be automatically detected and used.
+## Histogram Panel Plugin for Grafana
 
-```
-git clone git@github.com:mtanda/grafana-histogram-panel.git
-sudo service grafana-server restart
-```
+This plugin show the Histogram of time series data.
 
+![](https://raw.githubusercontent.com/mtanda/grafana-histogram-panel/master/dist/images/histogram.png)
 
-## Clone into a directory of your choice
+### How this plugin works
 
-The edit your grafana.ini config file (Default location is at /etc/grafana/grafana.ini) and add this:
+This plugin receives raw time series data, and count each value occurrence, and then show the occurrence as histogram.
 
-```ini
-[plugin.grafana-histogram-panel]
-path = /home/your/clone/dir/grafana-histogram-panel
-```
+### Supported Datasources
 
-Note that if you clone it into the grafana plugins directory you do not need to add the above config option. That is only
-if you want to place the plugin in a directory outside the standard plugins directory. Be aware that grafana-server
-needs read access to the directory.
+I confirmed this plugin work with following datasource.
+
+- Prometheus
+
+But, this plugin can handle time series data (defined by Grafana plugin interface).
+
+Should work with Graphite / InfluxDB / OpenTSDB.
+
+### Options
+
+- Bucket Size
+  - Can configure bucket size to make histogram data.
+
+### Known Issues
+
+- This plugin doesn't support Elasticsearch aggregation.
+  - As noted above, this plugin make histogram data in plugin.
+  - Can't handle the Elasticsearch aggregation result yet.
