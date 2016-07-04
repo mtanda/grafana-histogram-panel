@@ -28,3 +28,10 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 - This plugin doesn't support Elasticsearch aggregation.
   - As noted above, this plugin make histogram data in plugin.
   - Can't handle the Elasticsearch aggregation result yet.
+
+------
+
+#### Changelog
+
+##### v0.1.0
+- First public release
