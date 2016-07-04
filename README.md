@@ -33,5 +33,5 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 
 #### Changelog
 
-##### v0.1.0
-- First public release
+##### v0.1.1
+- Update document
