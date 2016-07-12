@@ -39,6 +39,8 @@ export default function HistogramTooltip(elem, dashboard, scope, getSeriesFn) {
     var value, i, series, hoverIndex;
     var results = [];
 
+    pos.x = panel.tooltip.shareds.bars.barWidth / 2;
+
     //now we know the current X (j) position for X and Y values
     var last_value = 0; //needed for stacked values
 
