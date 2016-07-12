@@ -151,7 +151,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         if (right.show && right.label) { gridMargin.right = 20; }
       }
 
-      function getHistogramPairs(series, fillStyle, bucketSize) {
+      function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {
         var result = [];
         if (bucketSize === null || bucketSize === 0) {
           bucketSize = 1;
@@ -166,6 +166,12 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         var nullAsZero = fillStyle === 'null as zero';
         var values = {};
         var currentValue;
+        if (_.isNumber(minValue)) {
+          values[minValue] = 0;
+        }
+        if (_.isNumber(maxValue)) {
+          values[maxValue] = 0;
+        }
         for (var i = 0; i < series.datapoints.length; i++) {
           currentValue = series.datapoints[i][0];
           if (currentValue === null) {
@@ -254,7 +260,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
 
         for (var i = 0; i < data.length; i++) {
           var series = data[i];
-          series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, panel.bucketSize || 1);
+          series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, panel.bucketSize || 1, panel.minValue, panel.maxValue);
 
           // if hidden remove points and disable stack
           if (ctrl.hiddenSeries[series.alias]) {
