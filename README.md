@@ -33,5 +33,8 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 
 #### Changelog
 
+##### v0.1.2
+- Add min/max option
+
 ##### v0.1.1
 - Update document
