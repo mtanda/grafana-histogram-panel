@@ -220,7 +220,10 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                 series.stats.min = null;
               }
               if (result.length) {
-                series.stats.avg = series.stats.total / result.length;
+                var count = _.reduce(_.values(values), function (memo, num) {
+                  return memo + num;
+                }, 0);
+                series.stats.avg = series.stats.total / count;
                 series.stats.current = currentValue;
               }
               series.stats.count = result.length;
