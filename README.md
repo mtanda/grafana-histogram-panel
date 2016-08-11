@@ -33,6 +33,9 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 
 #### Changelog
 
+##### v0.1.3
+- Fix avg legend
+
 ##### v0.1.2
 - Add min/max option
 
