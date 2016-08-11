@@ -203,7 +203,8 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         if (series.stats.max === Number.MIN_VALUE) { series.stats.max = null; }
         if (series.stats.min === Number.MAX_VALUE) { series.stats.min = null; }
         if (result.length) {
-          series.stats.avg = (series.stats.total / result.length);
+          var count = _.reduce(_.values(values), function(memo, num) { return memo + num; }, 0);
+          series.stats.avg = series.stats.total / count;
           series.stats.current = currentValue;
         }
         series.stats.count = result.length;
