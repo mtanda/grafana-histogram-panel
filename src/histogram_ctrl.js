@@ -25,6 +25,8 @@ export class HistogramCtrl extends MetricsPanelCtrl {
       datasource: null,
       // sets client side (flot) or native graphite png renderer (png)
       renderer: 'flot',
+      // sets bucket mode (size) for wxact bucket size or (count) to calculate size from min,max and count values
+      bucketMode: 'size',
       yaxes: [
         {
           label: null,
