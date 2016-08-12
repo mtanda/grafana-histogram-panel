@@ -266,7 +266,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           }
         };
 
-        var scopedVars = ctrl.row.scopedVars;
+        var scopedVars = ctrl.panel.scopedVars;
         var bucketSize = !panel.bucketSize && panel.bucketSize !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.bucketSize.toString(), scopedVars));
         var minValue = !panel.minValue && panel.minValue !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.minValue.toString(), scopedVars));
         var maxValue = !panel.maxValue && panel.maxValue !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.maxValue.toString(), scopedVars));
