@@ -271,6 +271,12 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         var minValue = !panel.minValue && panel.minValue !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.minValue.toString(), scopedVars));
         var maxValue = !panel.maxValue && panel.maxValue !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.maxValue.toString(), scopedVars));
 
+        switch(panel.bucketMode) {
+          case 'count':
+            bucketSize = (maxValue - minValue) / bucketSize;
+            break;
+        }
+
         for (var i = 0; i < data.length; i++) {
           var series = data[i];
           series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, bucketSize || 1, minValue, maxValue);
