@@ -259,9 +259,14 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           }
         };
 
+        var scopedVars = ctrl.row.scopedVars;
+        var bucketSize = parseFloat(ctrl.templateSrv.replaceWithText((panel.bucketSize || '1').toString(), scopedVars));
+        var minValue = parseFloat(ctrl.templateSrv.replaceWithText((panel.minValue || '').toString(), scopedVars));
+        var maxValue = parseFloat(ctrl.templateSrv.replaceWithText((panel.maxValue || '').toString(), scopedVars));
+
         for (var i = 0; i < data.length; i++) {
           var series = data[i];
-          series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, panel.bucketSize || 1, panel.minValue, panel.maxValue);
+          series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, bucketSize, minValue, maxValue);
 
           // if hidden remove points and disable stack
           if (ctrl.hiddenSeries[series.alias]) {
