@@ -196,16 +196,16 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           if(filterMin && currentValue < minValue) continue;
           if(filterMax && currentValue > maxValue) continue;
 
-          var bucket = (Math.floor(currentValue / bucketSize)*bucketSize).toFixed(3);
+          var bucket = Math.floor(currentValue / bucketSize) * bucketSize;
           if (bucket in values) {
             values[bucket]++;
           } else {
             values[bucket] = 1;
           }
         }
-        _.forEach(Object.keys(values).sort(), function(key) {
+        for(var key in values) {
           result.push([key, values[key]]);
-        });
+        }
         series.stats.timeStep = bucketSize;
         if (series.stats.max === Number.MIN_VALUE) { series.stats.max = null; }
         if (series.stats.min === Number.MAX_VALUE) { series.stats.min = null; }
