@@ -20,6 +20,7 @@ export default function HistogramTooltip(elem, dashboard, scope, getSeriesFn) {
   };
 
   this.findHoverIndexFromData = function(posX, series) {
+    posX = posX + series.bars.barWidth / 2;
     var len = series.data.length;
     for (var j = 0; j < len; j++) {
       if (series.data[j][0] > posX) {
