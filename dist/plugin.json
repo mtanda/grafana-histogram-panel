@@ -15,8 +15,8 @@
     "screenshots": [
       {"name": "Histogram", "path": "images/histogram.png"}
     ],
-    "version": "0.1.3",
-    "updated": "2016-08-12"
+    "version": "0.1.4",
+    "updated": "2016-08-15"
   },
 
   "dependencies": {

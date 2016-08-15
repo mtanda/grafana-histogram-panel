@@ -33,6 +33,12 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 
 #### Changelog
 
+##### v0.1.4
+- Add template variable support
+- Add bucket mode
+- Fix sorting of buckets
+- Fix tooltip display
+
 ##### v0.1.3
 - Fix avg legend
 
