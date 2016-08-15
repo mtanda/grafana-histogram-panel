@@ -22,6 +22,7 @@ System.register(['jquery'], function (_export, _context) {
     };
 
     this.findHoverIndexFromData = function (posX, series) {
+      posX = posX + series.bars.barWidth / 2;
       var len = series.data.length;
       for (var j = 0; j < len; j++) {
         if (series.data[j][0] > posX) {

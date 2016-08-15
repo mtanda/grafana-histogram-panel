@@ -1,19 +1,19 @@
 <div class="editor-row">
 	<div class="section gf-form-group">
 		<h5 class="section-heading">Histogram</h5>
-		<div class="gf-form-inline">
-			<div class="gf-form">
-				<label class="gf-form-label width-10">Bucket Size</label>
-				<input type="number" class="gf-form-input width-5" placeholder="auto" data-placement="right" ng-model="ctrl.panel.bucketSize" ng-change="ctrl.render()" ng-model-onblur>
+		<div class="gf-form">
+			<div class="gf-form-select-wrapper max-width-10">
+				<select class="gf-form-input" ng-model="ctrl.panel.bucketMode" ng-options="f.value as f.text for f in [{text: 'Bucket size', value: 'size'}, {text: 'Buckets count', value: 'count'}]" ng-change="ctrl.render()"></select>
 			</div>
-			<div class="gf-form">
-				<label class="gf-form-label width-10">Min Value</label>
-				<input type="number" class="gf-form-input width-5" placeholder="auto" data-placement="right" ng-model="ctrl.panel.minValue" ng-change="ctrl.render()" ng-model-onblur>
-			</div>
-			<div class="gf-form">
-				<label class="gf-form-label width-10">Max Value</label>
-				<input type="number" class="gf-form-input width-5" placeholder="auto" data-placement="right" ng-model="ctrl.panel.maxValue" ng-change="ctrl.render()" ng-model-onblur>
-			</div>
+			<input type="text" class="gf-form-input width-10" placeholder="auto" data-placement="right" ng-model="ctrl.panel.bucketSize" ng-change="ctrl.render()" ng-model-onblur>
+		</div>
+		<div class="gf-form">
+			<label class="gf-form-label width-10">Min Value</label>
+			<input type="text" class="gf-form-input width-10" placeholder="auto" data-placement="right" ng-model="ctrl.panel.minValue" ng-change="ctrl.render()" ng-model-onblur>
+		</div>
+		<div class="gf-form">
+			<label class="gf-form-label width-10">Max Value</label>
+			<input type="text" class="gf-form-input width-10" placeholder="auto" data-placement="right" ng-model="ctrl.panel.maxValue" ng-change="ctrl.render()" ng-model-onblur>
 		</div>
 	</div>
 </div>
