@@ -163,10 +163,10 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
             }
 
             function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {
-              var result = [];
               if (bucketSize === null || bucketSize <= 0) {
                 bucketSize = 1;
               }
+
               series.yaxis = 1; // TODO check
               series.stats.total = 0;
               series.stats.max = Number.MIN_VALUE;
@@ -180,11 +180,11 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
               var filterMin = false;
               var filterMax = false;
               if (_.isNumber(minValue) && !isNaN(minValue)) {
-                values[minValue] = 0;
+                values[minValue] = [minValue, 0];
                 filterMin = true;
               }
               if (_.isNumber(maxValue) && !isNaN(maxValue)) {
-                values[maxValue] = 0;
+                values[maxValue] = [maxValue, 0];
                 filterMax = true;
               }
               for (var i = 0; i < series.datapoints.length; i++) {
@@ -211,16 +211,14 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
 
                 var bucket = Math.floor(currentValue / bucketSize) * bucketSize;
                 if (bucket in values) {
-                  values[bucket]++;
+                  values[bucket][1]++;
                 } else {
-                  values[bucket] = 1;
+                  values[bucket] = [bucket, 1];
                 }
               }
-              for (var key in values) {
-                result.push([parseFloat(key), values[key]]);
-              }
-              result = _.sortBy(result, function (item) {
-                return item[0];
+
+              var result = _.sortBy(_.map(values), function (x) {
+                return x[0];
               });
               series.stats.timeStep = bucketSize;
               if (series.stats.max === Number.MIN_VALUE) {
