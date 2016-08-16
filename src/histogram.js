@@ -151,11 +151,11 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         if (right.show && right.label) { gridMargin.right = 20; }
       }
 
-      function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {
-        var result = [];
+      function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {        
         if (bucketSize === null || bucketSize <= 0) {
           bucketSize = 1;
         }
+	
         series.yaxis = 1; // TODO check
         series.stats.total = 0;
         series.stats.max = Number.MIN_VALUE;
@@ -169,11 +169,11 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         var filterMin = false;
         var filterMax = false;
         if (_.isNumber(minValue) && !isNaN(minValue)) {
-          values[minValue] = 0;
+          values[minValue] = [minValue, 0];
           filterMin = true;
         }
         if (_.isNumber(maxValue) && !isNaN(maxValue)) {
-          values[maxValue] = 0;
+          values[maxValue] = [maxValue, 0];
           filterMax = true;
         }
         for (var i = 0; i < series.datapoints.length; i++) {
@@ -198,15 +198,13 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
 
           var bucket = Math.floor(currentValue / bucketSize) * bucketSize;
           if (bucket in values) {
-            values[bucket]++;
+            values[bucket][1]++;
           } else {
-            values[bucket] = 1;
+            values[bucket] = [bucket, 1];
           }
-        }
-        for(var key in values) {
-          result.push([parseFloat(key), values[key]]);
-        }
-        result = _.sortBy(result, function(item) { return item[0]; });
+        }		
+		
+        var result = _.sortBy(_.map(values), x => x[0]);			
         series.stats.timeStep = bucketSize;
         if (series.stats.max === Number.MIN_VALUE) { series.stats.max = null; }
         if (series.stats.min === Number.MAX_VALUE) { series.stats.min = null; }
