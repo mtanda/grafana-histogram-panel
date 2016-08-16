@@ -217,7 +217,7 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                 }
               }
 
-              var result = _.sortBy(_.map(values), function (x) {
+              var result = _.sortBy(values, function (x) {
                 return x[0];
               });
               series.stats.timeStep = bucketSize;
