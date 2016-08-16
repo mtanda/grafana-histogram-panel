@@ -33,6 +33,9 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 
 #### Changelog
 
+##### v0.1.5
+- Refactoring
+
 ##### v0.1.4
 - Add template variable support
 - Add bucket mode
