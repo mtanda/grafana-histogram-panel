@@ -164,7 +164,7 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
 
             function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {
               var result = [];
-              if (bucketSize === null || bucketSize === 0) {
+              if (bucketSize === null || bucketSize <= 0) {
                 bucketSize = 1;
               }
               series.yaxis = 1; // TODO check
@@ -177,11 +177,15 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
               var nullAsZero = fillStyle === 'null as zero';
               var values = {};
               var currentValue;
-              if (_.isNumber(minValue)) {
+              var filterMin = false;
+              var filterMax = false;
+              if (_.isNumber(minValue) && !isNaN(minValue)) {
                 values[minValue] = 0;
+                filterMin = true;
               }
-              if (_.isNumber(maxValue)) {
+              if (_.isNumber(maxValue) && !isNaN(maxValue)) {
                 values[maxValue] = 0;
+                filterMax = true;
               }
               for (var i = 0; i < series.datapoints.length; i++) {
                 currentValue = series.datapoints[i][0];
@@ -202,15 +206,21 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                 if (currentValue < series.stats.min) {
                   series.stats.min = currentValue;
                 }
-                var bucket = (Math.floor(currentValue / bucketSize) * bucketSize).toFixed(3);
+                if (filterMin && currentValue < minValue) continue;
+                if (filterMax && currentValue > maxValue) continue;
+
+                var bucket = Math.floor(currentValue / bucketSize) * bucketSize;
                 if (bucket in values) {
                   values[bucket]++;
                 } else {
                   values[bucket] = 1;
                 }
               }
-              _.forEach(Object.keys(values).sort(), function (key) {
-                result.push([key, values[key]]);
+              for (var key in values) {
+                result.push([parseFloat(key), values[key]]);
+              }
+              result = _.sortBy(result, function (item) {
+                return item[0];
               });
               series.stats.timeStep = bucketSize;
               if (series.stats.max === Number.MIN_VALUE) {
@@ -278,9 +288,20 @@ System.register(['angular', 'jquery', 'moment', 'lodash', 'app/core/utils/kbn', 
                 }
               };
 
+              var scopedVars = ctrl.panel.scopedVars;
+              var bucketSize = !panel.bucketSize && panel.bucketSize !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.bucketSize.toString(), scopedVars));
+              var minValue = !panel.minValue && panel.minValue !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.minValue.toString(), scopedVars));
+              var maxValue = !panel.maxValue && panel.maxValue !== 0 ? null : parseFloat(ctrl.templateSrv.replaceWithText(panel.maxValue.toString(), scopedVars));
+
+              switch (panel.bucketMode) {
+                case 'count':
+                  bucketSize = (maxValue - minValue) / bucketSize;
+                  break;
+              }
+
               for (var i = 0; i < data.length; i++) {
                 var series = data[i];
-                series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, panel.bucketSize || 1, panel.minValue, panel.maxValue);
+                series.data = getHistogramPairs(series, series.nullPointMode || panel.nullPointMode, bucketSize || 1, minValue, maxValue);
 
                 // if hidden remove points and disable stack
                 if (ctrl.hiddenSeries[series.alias]) {
