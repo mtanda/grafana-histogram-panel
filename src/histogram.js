@@ -204,7 +204,7 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           }
         }		
 		
-        var result = _.sortBy(_.map(values), x => x[0]);			
+        var result = _.sortBy(values, x => x[0]);			
         series.stats.timeStep = bucketSize;
         if (series.stats.max === Number.MIN_VALUE) { series.stats.max = null; }
         if (series.stats.min === Number.MAX_VALUE) { series.stats.min = null; }
