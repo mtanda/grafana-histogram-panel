@@ -237,7 +237,11 @@ System.register(['app/plugins/panel/graph/legend', 'app/plugins/panel/graph/seri
         }, {
           key: 'issueQueries',
           value: function issueQueries(datasource) {
-            this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
+            this.annotationsPromise = this.annotationsSrv.getAnnotations({
+              dashboard: this.dashboard,
+              panel: this.panel,
+              range: this.range
+            });
             return _get(Object.getPrototypeOf(HistogramCtrl.prototype), 'issueQueries', this).call(this, datasource);
           }
         }, {
@@ -248,7 +252,11 @@ System.register(['app/plugins/panel/graph/legend', 'app/plugins/panel/graph/seri
         }, {
           key: 'onDataSnapshotLoad',
           value: function onDataSnapshotLoad(snapshotData) {
-            this.annotationsPromise = this.annotationsSrv.getAnnotations(this.dashboard);
+            this.annotationsPromise = this.annotationsSrv.getAnnotations({
+              dashboard: this.dashboard,
+              panel: this.panel,
+              range: this.range
+            });
             this.onDataReceived(snapshotData);
           }
         }, {

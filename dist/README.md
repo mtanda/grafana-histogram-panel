@@ -33,6 +33,9 @@ Should work with Graphite / InfluxDB / OpenTSDB.
 
 #### Changelog
 
+##### v0.1.6
+- Support Grafana 4.0
+
 ##### v0.1.5
 - Refactoring
 
