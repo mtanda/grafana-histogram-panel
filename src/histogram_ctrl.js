@@ -224,13 +224,13 @@ export class HistogramCtrl extends MetricsPanelCtrl {
   onRender() {
     if (!this.seriesList) { return; }
 
-    for (let series of this.seriesList) {
+    _.each(this.seriesList, series => {
       series.applySeriesOverrides(this.panel.seriesOverrides);
 
       if (series.unit) {
         this.panel.yaxes[series.yaxis-1].format = series.unit;
       }
-    }
+    });
   }
 
   changeSeriesColor(series, color) {
