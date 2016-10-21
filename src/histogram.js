@@ -151,11 +151,11 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
         if (right.show && right.label) { gridMargin.right = 20; }
       }
 
-      function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {        
+      function getHistogramPairs(series, fillStyle, bucketSize, minValue, maxValue) {
         if (bucketSize === null || bucketSize <= 0) {
           bucketSize = 1;
         }
-	
+
         series.yaxis = 1; // TODO check
         series.stats.total = 0;
         series.stats.max = Number.MIN_VALUE;
@@ -202,9 +202,9 @@ angular.module('grafana.directives').directive('grafanaHistogram', function($roo
           } else {
             values[bucket] = [bucket, 1];
           }
-        }		
-		
-        var result = _.sortBy(values, x => x[0]);			
+        }
+
+        var result = _.sortBy(values, x => x[0]);
         series.stats.timeStep = bucketSize;
         if (series.stats.max === Number.MIN_VALUE) { series.stats.max = null; }
         if (series.stats.min === Number.MAX_VALUE) { series.stats.min = null; }
