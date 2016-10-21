@@ -322,38 +322,19 @@ System.register(['app/plugins/panel/graph/legend', 'app/plugins/panel/graph/seri
         }, {
           key: 'onRender',
           value: function onRender() {
+            var _this3 = this;
+
             if (!this.seriesList) {
               return;
             }
 
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+            _.each(this.seriesList, function (series) {
+              series.applySeriesOverrides(_this3.panel.seriesOverrides);
 
-            try {
-              for (var _iterator = this.seriesList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var series = _step.value;
-
-                series.applySeriesOverrides(this.panel.seriesOverrides);
-
-                if (series.unit) {
-                  this.panel.yaxes[series.yaxis - 1].format = series.unit;
-                }
+              if (series.unit) {
+                _this3.panel.yaxes[series.yaxis - 1].format = series.unit;
               }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                  _iterator.return();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
-              }
-            }
+            });
           }
         }, {
           key: 'changeSeriesColor',
@@ -379,7 +360,7 @@ System.register(['app/plugins/panel/graph/legend', 'app/plugins/panel/graph/seri
         }, {
           key: 'toggleSeriesExclusiveMode',
           value: function toggleSeriesExclusiveMode(serie) {
-            var _this3 = this;
+            var _this4 = this;
 
             var hidden = this.hiddenSeries;
 
@@ -399,7 +380,7 @@ System.register(['app/plugins/panel/graph/legend', 'app/plugins/panel/graph/seri
             if (alreadyExclusive) {
               // remove all hidden series
               _.each(this.seriesList, function (value) {
-                delete _this3.hiddenSeries[value.alias];
+                delete _this4.hiddenSeries[value.alias];
               });
             } else {
               // hide all but this serie
@@ -408,7 +389,7 @@ System.register(['app/plugins/panel/graph/legend', 'app/plugins/panel/graph/seri
                   return;
                 }
 
-                _this3.hiddenSeries[value.alias] = true;
+                _this4.hiddenSeries[value.alias] = true;
               });
             }
           }
