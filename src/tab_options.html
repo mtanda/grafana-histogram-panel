@@ -15,5 +15,11 @@
 			<label class="gf-form-label width-10">Max Value</label>
 			<input type="text" class="gf-form-input width-10" placeholder="auto" data-placement="right" ng-model="ctrl.panel.maxValue" ng-change="ctrl.render()" ng-model-onblur>
 		</div>
+		<div class="gf-form">
+			<gf-form-switch class="gf-form"
+				label="Normalize" label-class="width-10"
+				checked="ctrl.panel.normalize" on-change="ctrl.render()">
+			</gf-form-switch>
+		</div>
 	</div>
 </div>
